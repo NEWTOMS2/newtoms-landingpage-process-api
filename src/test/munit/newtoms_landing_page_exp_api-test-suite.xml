@@ -186,7 +186,6 @@ http://www.mulesoft.org/schema/mule/mock http://www.mulesoft.org/schema/mule/moc
         <mock:verify-call messageProcessor="json:json-to-object-transformer" doc:name="Verify transform Json request to Object Call">
             <mock:with-attributes>
                 <mock:with-attribute name="doc:name" whereValue="#['JSON to Object']"/>
-                <mock:with-attribute name="returnClass" whereValue="java.util.Map"/>
             </mock:with-attributes>
         </mock:verify-call>
     </munit:test>

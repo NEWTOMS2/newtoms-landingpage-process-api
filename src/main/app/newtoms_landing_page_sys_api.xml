@@ -30,7 +30,9 @@ http://www.mulesoft.org/schema/mule/ee/dw http://www.mulesoft.org/schema/mule/ee
         </dw:transform-message>
     </sub-flow>
     <sub-flow name="getLandingPageTemplateByIdInSystem">
+        <logger message="Request ID: #[flowVars.idDocumentTemplates]" level="INFO" doc:name="Logger"/>
         <newtoms-landing-page-exp-api:get-landing-page-template config-ref="newtoms_landing_page_sys_api__Configuration" id="#[flowVars.idDocumentTemplates]" doc:name="Get landing page template"/>
+        <logger message="Response: #[payload]" level="INFO" doc:name="Logger"/>
     </sub-flow>
     <sub-flow name="updateLandingPageTemplateByIdInSystem">
         <flow-ref name="tranformPayloadToUpdateLandingPageTemplateRequestPojo" doc:name="tranformPayloadToUpdateLandingPageTemplateRequestPojo"/>
