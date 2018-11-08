@@ -27,7 +27,13 @@
 				<extensions>true</extensions>
 				<configuration>
                     <copyToAppsDirectory>true</copyToAppsDirectory>
-				</configuration>
+				<inclusions>
+                        <inclusion>
+                            <groupId>org.mule.modules</groupId>
+                            <artifactId>mule-module-sfdc</artifactId>
+                        </inclusion>
+                    </inclusions>
+                </configuration>
 			</plugin>
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
@@ -198,6 +204,11 @@
             <version>${mule.version}</version>
             <scope>provided</scope>
         </dependency>
+    	<dependency>
+            <groupId>18fb7fde-d35c-4b58-b297-07464da7ce2b.team-venezuela</groupId>
+            <artifactId>mule-module-newtoms_landing_page_exp_api</artifactId>
+            <version>1.0.0</version>
+        </dependency>
     </dependencies>
 
 	<repositories>
@@ -212,6 +223,23 @@
             <name>MuleSoft Releases Repository</name>
             <url>http://repository.mulesoft.org/releases/</url>
             <layout>default</layout>
+        </repository>
+        <repository>
+	        <id>mulesoft-snapshots</id>
+	        <name>MuleSoft Snapshot Repository</name>
+	        <url>https://repository.mulesoft.org/snapshots/</url>
+	        <layout>default</layout>
+	    </repository>
+	    <repository>
+	      <id>Repository</id>
+	      <name>Corporate Repository</name>
+	      <url>https://maven.anypoint.mulesoft.com/api/v1/organizations/43194e16-c9ee-43be-b093-a51aac1de09f/maven</url>
+	      <layout>default</layout>
+	    </repository>
+    <repository>
+            <id>mule-ee-releases</id>
+            <name>MuleEE Releases Repository</name>
+            <url>https://repository-master.mulesoft.org/nexus/content/repositories/releases-ee/</url>
         </repository>
     </repositories>
     <pluginRepositories>

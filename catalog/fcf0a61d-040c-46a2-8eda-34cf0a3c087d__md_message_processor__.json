@@ -1,0 +1,11 @@
+{
+    "inputMessageMetadata": {},
+    "outputMessageMetadata": {
+        "messagePayload": {
+            "connectorName": "newtoms_landing_page_sys_api__Configuration",
+            "typeId": "restc_18fb7fded35c4b58b29707464da7ce2b.teamvenezuela.newtoms_landing_page_exp_api.pojo.getlandingpagetemplateresponse.GetLandingPageTemplateResponse1234029105180457604"
+        }
+    },
+    "id": "fcf0a61d-040c-46a2-8eda-34cf0a3c087d",
+    "version": "5.2.0.0"
+}

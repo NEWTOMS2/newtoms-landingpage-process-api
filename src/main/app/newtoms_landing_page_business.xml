@@ -7,40 +7,12 @@
 http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
 http://www.mulesoft.org/schema/mule/ee/dw http://www.mulesoft.org/schema/mule/ee/dw/current/dw.xsd">
     <sub-flow name="getDocumentTemplateConfigByIdForLandingPage">
-        <dw:transform-message doc:name="Transform Message">
-            <dw:set-payload><![CDATA[%dw 1.0
-%output application/java
----
-{
-   documentId:1,
-   documentType:"Whitepaper",
-   documentTitle:"Best practices for microservices",
-   documentDescription:"Today's business environment is extraordinarily competitive. No company – no matter its size or what industry it is in – is safe from disruption. To mitigate this risk, it's important to consider implementing microservices best practices in order to change quickly, innovate easily, and meet competition wherever it arises.",
-   documentUrl:"https://www.mulesoft.com/sites/default/files/resource-assets/wp_Best%20Practices%20for%20Microservices%20Whitepaper%20Research.pdf"
-}]]></dw:set-payload>
-        </dw:transform-message>
+        <flow-ref name="getLandingPageTemplateByIdInSystem" doc:name="getLandingPageTemplateByIdInSystem"/>
     </sub-flow>
     <sub-flow name="createANewLeadFromLandingPage">
-        <dw:transform-message doc:name="Transform Message">
-            <dw:set-payload><![CDATA[%dw 1.0
-%output application/java
----
-{
-}]]></dw:set-payload>
-        </dw:transform-message>
+        <flow-ref name="createNewLeadInSystem" doc:name="createNewLeadInSystem"/>
     </sub-flow>
     <sub-flow name="updateDocumentTemplateConfigByIdForLandingPage">
-        <dw:transform-message doc:name="Transform Message">
-            <dw:set-payload><![CDATA[%dw 1.0
-%output application/java
----
-{
-   documentId:1,
-   documentType:"Whitepaper",
-   documentTitle:"Best practices for microservices",
-   documentDescription:"Today's business environment is extraordinarily competitive. No company – no matter its size or what industry it is in – is safe from disruption. To mitigate this risk, it's important to consider implementing microservices best practices in order to change quickly, innovate easily, and meet competition wherever it arises.",
-   documentUrl:"https://www.mulesoft.com/sites/default/files/resource-assets/wp_Best%20Practices%20for%20Microservices%20Whitepaper%20Research.pdf"
-}]]></dw:set-payload>
-        </dw:transform-message>
+        <flow-ref name="updateLandingPageTemplateByIdInSystem" doc:name="updateLandingPageTemplateByIdInSystem"/>
     </sub-flow>
 </mule>

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:dw="http://www.mulesoft.org/schema/mule/ee/dw" xmlns:json="http://www.mulesoft.org/schema/mule/json" xmlns:metadata="http://www.mulesoft.org/schema/mule/metadata" xmlns:sfdc="http://www.mulesoft.org/schema/mule/sfdc" xmlns:newtoms-landing-page-exp-api="http://www.mulesoft.org/schema/mule/newtoms-landing-page-exp-api" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:spring="http://www.springframework.org/schema/beans" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd
+http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/newtoms-landing-page-exp-api http://www.mulesoft.org/schema/mule/newtoms-landing-page-exp-api/current/mule-newtoms-landing-page-exp-api.xsd
+http://www.mulesoft.org/schema/mule/sfdc http://www.mulesoft.org/schema/mule/sfdc/current/mule-sfdc.xsd
+http://www.mulesoft.org/schema/mule/json http://www.mulesoft.org/schema/mule/json/current/mule-json.xsd
+http://www.mulesoft.org/schema/mule/ee/dw http://www.mulesoft.org/schema/mule/ee/dw/current/dw.xsd">
+    <sub-flow name="createNewLeadInSystem">
+        <flow-ref name="tranformPayloadToCreateNewLeadRequestPojo" doc:name="tranformPayloadToCreateNewLeadRequestPojo"/>
+        <newtoms-landing-page-exp-api:create-new-lead config-ref="newtoms_landing_page_sys_api__Configuration" doc:name="Create A new Lead"/>
+    </sub-flow>
+    <sub-flow name="tranformPayloadToCreateNewLeadRequestPojo">
+        <dw:transform-message doc:name="Transform Message" metadata:id="1bd67b68-ecb5-4353-9c5d-7972d7119191">
+            <dw:set-payload><![CDATA[%dw 1.0
+%output application/java
+---
+{
+	company: payload.company,
+	email: payload.email,
+	firstName: payload.firstName,
+	lastName: payload.lastName,
+	title: payload.title
+} as :object {
+	class : "restc_18fb7fded35c4b58b29707464da7ce2b.teamvenezuela.newtoms_landing_page_exp_api.pojo.createnewleadrequest.CreateNewLeadRequest5024335287740653857"
+}]]></dw:set-payload>
+        </dw:transform-message>
+    </sub-flow>
+    <sub-flow name="getLandingPageTemplateByIdInSystem">
+        <newtoms-landing-page-exp-api:get-landing-page-template config-ref="newtoms_landing_page_sys_api__Configuration" id="#[flowVars.idDocumentTemplates]" doc:name="Get landing page template"/>
+    </sub-flow>
+    <sub-flow name="updateLandingPageTemplateByIdInSystem">
+        <flow-ref name="tranformPayloadToUpdateLandingPageTemplateRequestPojo" doc:name="tranformPayloadToUpdateLandingPageTemplateRequestPojo"/>
+        <newtoms-landing-page-exp-api:update-landing-page-template config-ref="newtoms_landing_page_sys_api__Configuration" id="#[flowVars.documentId]" doc:name="Update landing page template"/>
+    </sub-flow>
+    <sub-flow name="tranformPayloadToUpdateLandingPageTemplateRequestPojo">
+        <dw:transform-message doc:name="Transform Message">
+            <dw:set-payload><![CDATA[%dw 1.0
+%output application/java
+---
+{
+	documentDescription: payload.documentDescription,
+	documentTitle: payload.documentTitle,
+	documentType: payload.documentType,
+	documentUrl: payload.documentUrl
+} as :object {
+	class : "restc_18fb7fded35c4b58b29707464da7ce2b.teamvenezuela.newtoms_landing_page_exp_api.pojo.updatelandingpagetemplaterequest.UpdateLandingPageTemplateRequest3747331852031985512"
+}]]></dw:set-payload>
+        </dw:transform-message>
+    </sub-flow>
+</mule>

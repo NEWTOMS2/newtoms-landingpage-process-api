@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:munit="http://www.mulesoft.org/schema/mule/munit" xmlns:spring="http://www.springframework.org/schema/beans" xmlns:json="http://www.mulesoft.org/schema/mule/json" xmlns:metadata="http://www.mulesoft.org/schema/mule/metadata" xmlns:dw="http://www.mulesoft.org/schema/mule/ee/dw" xmlns:core="http://www.mulesoft.org/schema/mule/core" xmlns:mock="http://www.mulesoft.org/schema/mule/mock" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/munit http://www.mulesoft.org/schema/mule/munit/current/mule-munit.xsd
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd
+http://www.mulesoft.org/schema/mule/json http://www.mulesoft.org/schema/mule/json/current/mule-json.xsd
+http://www.mulesoft.org/schema/mule/ee/dw http://www.mulesoft.org/schema/mule/ee/dw/current/dw.xsd
+http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/mock http://www.mulesoft.org/schema/mule/mock/current/mule-mock.xsd">
+    <munit:config name="munit" doc:name="MUnit configuration"/>
+    <spring:beans>
+        <spring:import resource="classpath:newtoms_landing_page_sys_api.xml"/>
+        <spring:import resource="classpath:newtoms_landing_page_sys_api_config.xml"/>
+        <spring:import resource="classpath:messages-for-test-suite.xml"/>
+    </spring:beans>
+    <global-property name="newtoms.landing.page.sys.api.apiUrl" value="https://mocksvc.mulesoft.com/mocks/bd61be4a-c2b5-49ad-a910-33c7624b6afb" doc:name="Global Property"/>
+    <munit:before-test name="newtoms_landing_page_sys_api-test-suiteBefore_Test" description="Before tests actions">
+        <flow-ref name="setExpectedCreateNewLeadResponsePojo" doc:name="setExpectedCreateNewLeadResponsePojo"/>
+        <flow-ref name="setExpectedGetLandingPageTemplateResponse1234029105180457604" doc:name="setExpectedGetLandingPageTemplateResponse1234029105180457604"/>
+        <flow-ref name="setExpectedUpdateLandingPageTemplateRequestPojo" doc:name="setExpectedUpdateLandingPageTemplateRequestPojo"/>
+    </munit:before-test>
+    <munit:test name="GivenANewLeadRequestWhenCreateNewLeadInSystemThenReturnAResponse" description="GivenANewLeadRequestWhenCreateNewLeadInSystemThenReturnAResponse">
+        <mock:when messageProcessor="newtoms-landing-page-exp-api:create-new-lead" doc:name="Mock-Create A new Lead">
+            <mock:with-attributes>
+                <mock:with-attribute name="doc:name" whereValue="#['Create A new Lead']"/>
+            </mock:with-attributes>
+            <mock:then-return payload="#[flowVars.expectedCreateNewLeadResponsePojo]" mimeType="application/java"/>
+        </mock:when>
+        <flow-ref name="getNewLeadRequest" doc:name="getNewLeadRequest"/>
+        <flow-ref name="createNewLeadInSystem" doc:name="Flow-ref to createNewLeadInSystem"/>
+        <munit:assert-not-null doc:name="Assert Not Null Payload"/>
+    </munit:test>
+    <munit:test name="GivenANewLeadRequestWhenCreateNewLeadInSystemThenReturnACreateNewLeadResponsePojo" description="GivenANewLeadRequestWhenCreateNewLeadInSystemThenReturnACreateNewLeadResponsePojo">
+        <mock:when messageProcessor="newtoms-landing-page-exp-api:create-new-lead" doc:name="Mock-Create A new Lead">
+            <mock:with-attributes>
+                <mock:with-attribute name="doc:name" whereValue="#['Create A new Lead']"/>
+            </mock:with-attributes>
+            <mock:then-return payload="#[flowVars.expectedCreateNewLeadResponsePojo]" mimeType="application/java"/>
+        </mock:when>
+        <flow-ref name="getNewLeadRequest" doc:name="getNewLeadRequest"/>
+        <flow-ref name="createNewLeadInSystem" doc:name="Flow-ref to createNewLeadInSystem"/>
+        <munit:assert-payload-equals message="It is not the expected Create New Lead Response Pojo" expectedValue="#[flowVars.expectedCreateNewLeadResponsePojo]" doc:name="Assert Payload for Expected Create New Lead Response Pojo"/>
+    </munit:test>
+    <munit:test name="GivenANewLeadRequestWhenCreateNewLeadInSystemThenCallRestApiByAConnector" description="GivenANewLeadRequestWhenCreateNewLeadInSystemThenCallRestApiByAConnector">
+        <mock:when messageProcessor="newtoms-landing-page-exp-api:create-new-lead" doc:name="Mock-Create A new Lead">
+            <mock:with-attributes>
+                <mock:with-attribute name="doc:name" whereValue="#['Create A new Lead']"/>
+            </mock:with-attributes>
+            <mock:then-return payload="#[flowVars.expectedCreateNewLeadResponsePojo]" mimeType="application/java"/>
+        </mock:when>
+        <flow-ref name="getNewLeadRequest" doc:name="getNewLeadRequest"/>
+        <flow-ref name="createNewLeadInSystem" doc:name="Flow-ref to createNewLeadInSystem"/>
+        <mock:verify-call messageProcessor="newtoms-landing-page-exp-api:create-new-lead" doc:name="Verify Create A new Lead Call">
+            <mock:with-attributes>
+                <mock:with-attribute name="doc:name" whereValue="#['Create A new Lead']"/>
+            </mock:with-attributes>
+        </mock:verify-call>
+    </munit:test>
+    <munit:test name="GivenANewLeadRequestWhenCreateNewLeadInSystemThenTranformPayloadToCreateNewLeadRequestPojo" description="GivenANewLeadRequestWhenCreateNewLeadInSystemThenTranformPayloadToCreateNewLeadRequestPojo">
+        <mock:when messageProcessor="newtoms-landing-page-exp-api:create-new-lead" doc:name="Mock-Create A new Lead">
+            <mock:with-attributes>
+                <mock:with-attribute name="doc:name" whereValue="#['Create A new Lead']"/>
+            </mock:with-attributes>
+            <mock:then-return payload="#[flowVars.expectedCreateNewLeadResponsePojo]" mimeType="application/java"/>
+        </mock:when>
+        <flow-ref name="getNewLeadRequest" doc:name="getNewLeadRequest"/>
+        <flow-ref name="createNewLeadInSystem" doc:name="Flow-ref to createNewLeadInSystem"/>
+        <mock:verify-call messageProcessor="mule:sub-flow" doc:name="Verify tranformPayloadToCreateNewLeadRequestPojo Call">
+            <mock:with-attributes>
+                <mock:with-attribute name="name" whereValue="#[matchContains('tranformPayloadToCreateNewLeadRequestPojo')]"/>
+            </mock:with-attributes>
+        </mock:verify-call>
+    </munit:test>
+    <munit:test name="Functional-GivenANewLeadRequestWhenCreateNewLeadInSystemThenReturnAResponse" description="GivenANewLeadRequestWhenCreateNewLeadInSystemThenReturnAResponse" ignore="true">
+        <flow-ref name="getNewLeadRequest" doc:name="getNewLeadRequest"/>
+        <flow-ref name="createNewLeadInSystem" doc:name="Flow-ref to createNewLeadInSystem"/>
+        <munit:assert-not-null doc:name="Assert Not Null Payload"/>
+    </munit:test>
+    <munit:test name="GivenAsetGetLandingPageTemplateByIdRequestWhenGetLandingPageTemplateByIdInSystemThenReturnAResponse" description="GivenAsetGetLandingPageTemplateByIdRequestWhenGetLandingPageTemplateByIdInSystemThenReturnAResponse">
+        <mock:when messageProcessor="newtoms-landing-page-exp-api:get-landing-page-template" doc:name="Mock - Get landing page template">
+            <mock:with-attributes>
+                <mock:with-attribute name="doc:name" whereValue="#['Get landing page template']"/>
+            </mock:with-attributes>
+            <mock:then-return payload="#[flowVars.expectedGetLandingPageTemplateResponse1234029105180457604]"/>
+        </mock:when>
+        <flow-ref name="setGetLandingPageTemplateByIdRequest" doc:name="setGetLandingPageTemplateByIdRequest"/>
+        <flow-ref name="getLandingPageTemplateByIdInSystem" doc:name="Flow-ref to getLandingPageTemplateByIdInSystem"/>
+        <munit:assert-not-null doc:name="Assert Not Null Payload"/>
+    </munit:test>
+    <munit:test name="GivenAsetGetLandingPageTemplateByIdRequestWhenGetLandingPageTemplateByIdInSystemThenReturnAGetLandingPageTemplateResponse" description="GivenAsetGetLandingPageTemplateByIdRequestWhenGetLandingPageTemplateByIdInSystemThenReturnAGetLandingPageTemplateResponse">
+        <mock:when messageProcessor="newtoms-landing-page-exp-api:get-landing-page-template" doc:name="Mock - Get landing page template">
+            <mock:with-attributes>
+                <mock:with-attribute name="doc:name" whereValue="#['Get landing page template']"/>
+            </mock:with-attributes>
+            <mock:then-return payload="#[flowVars.expectedGetLandingPageTemplateResponse1234029105180457604]"/>
+        </mock:when>
+        <flow-ref name="setGetLandingPageTemplateByIdRequest" doc:name="setGetLandingPageTemplateByIdRequest"/>
+        <flow-ref name="getLandingPageTemplateByIdInSystem" doc:name="Flow-ref to getLandingPageTemplateByIdInSystem"/>
+        <munit:assert-payload-equals message="It is not the expected GetLandingPageTemplateResponse Pojo" expectedValue="#[flowVars.expectedGetLandingPageTemplateResponse1234029105180457604]" doc:name="Assert Payload for Expected GetLandingPageTemplateResponse"/>
+    </munit:test>
+    <munit:test name="GivenAsetGetLandingPageTemplateByIdRequestWhenGetLandingPageTemplateByIdInSystemThenRequestIsSendByConnectorToTheSystem" description="GivenAsetGetLandingPageTemplateByIdRequestWhenGetLandingPageTemplateByIdInSystemThenRequestIsSendByConnectorToTheSystem">
+        <mock:when messageProcessor="newtoms-landing-page-exp-api:get-landing-page-template" doc:name="Mock - Get landing page template">
+            <mock:with-attributes>
+                <mock:with-attribute name="doc:name" whereValue="#['Get landing page template']"/>
+            </mock:with-attributes>
+            <mock:then-return payload="#[flowVars.expectedGetLandingPageTemplateResponse1234029105180457604]"/>
+        </mock:when>
+        <flow-ref name="setGetLandingPageTemplateByIdRequest" doc:name="setGetLandingPageTemplateByIdRequest"/>
+        <flow-ref name="getLandingPageTemplateByIdInSystem" doc:name="Flow-ref to getLandingPageTemplateByIdInSystem"/>
+        <mock:verify-call messageProcessor="newtoms-landing-page-exp-api:get-landing-page-template" doc:name="Verify Get landing page template Call">
+            <mock:with-attributes>
+                <mock:with-attribute name="doc:name" whereValue="#['Get landing page template']"/>
+                <mock:with-attribute name="id" whereValue="#[1]"/>
+            </mock:with-attributes>
+        </mock:verify-call>
+    </munit:test>
+    <munit:test name="Functional-GivenAsetGetLandingPageTemplateByIdRequestWhenGetLandingPageTemplateByIdInSystemThenReturnAResponse" description="GivenAsetGetLandingPageTemplateByIdRequestWhenGetLandingPageTemplateByIdInSystemThenReturnAResponse" ignore="true">
+        <flow-ref name="setGetLandingPageTemplateByIdRequest" doc:name="setGetLandingPageTemplateByIdRequest"/>
+        <flow-ref name="getLandingPageTemplateByIdInSystem" doc:name="Flow-ref to getLandingPageTemplateByIdInSystem"/>
+        <munit:assert-not-null doc:name="Assert Not Null Payload"/>
+    </munit:test>
+    <munit:test name="GivenAnUpdateDocumentTemplateByIdRequestWhenUpdateLandingPageTemplateByIdInSystemThenReturnAResponse" description="GivenAnUpdateDocumentTemplateByIdRequestWhenUpdateLandingPageTemplateByIdInSystemThenReturnAResponse">
+        <mock:when messageProcessor="newtoms-landing-page-exp-api:update-landing-page-template" doc:name="Mock - Update landing page template">
+            <mock:with-attributes>
+                <mock:with-attribute name="doc:name" whereValue="#['Update landing page template']"/>
+            </mock:with-attributes>
+            <mock:then-return payload="#[flowVars.expectedGetLandingPageTemplateResponse1234029105180457604]"/>
+        </mock:when>
+        <flow-ref name="setUpdateDocumentTemplateByIdRequest" doc:name="setUpdateDocumentTemplateByIdRequest"/>
+        <set-variable variableName="documentId" value="#[1]" doc:name="set documentId Variable"/>
+        <flow-ref name="updateLandingPageTemplateByIdInSystem" doc:name="Flow-ref to updateLandingPageTemplateByIdInSystem"/>
+        <munit:assert-not-null doc:name="Assert Not Null Payload"/>
+    </munit:test>
+    <munit:test name="GivenAnUpdateDocumentTemplateByIdRequestWhenUpdateLandingPageTemplateByIdInSystemThenReturnAUpdatedLandingPageResponse" description="GivenAnUpdateDocumentTemplateByIdRequestWhenUpdateLandingPageTemplateByIdInSystemThenReturnAUpdatedLandingPageResponse">
+        <mock:when messageProcessor="newtoms-landing-page-exp-api:update-landing-page-template" doc:name="Mock - Update landing page template">
+            <mock:with-attributes>
+                <mock:with-attribute name="doc:name" whereValue="#['Update landing page template']"/>
+            </mock:with-attributes>
+            <mock:then-return payload="#[flowVars.expectedGetLandingPageTemplateResponse1234029105180457604]"/>
+        </mock:when>
+        <flow-ref name="setUpdateDocumentTemplateByIdRequest" doc:name="setUpdateDocumentTemplateByIdRequest"/>
+        <set-variable variableName="documentId" value="#[1]" doc:name="set documentId Variable"/>
+        <flow-ref name="updateLandingPageTemplateByIdInSystem" doc:name="Flow-ref to updateLandingPageTemplateByIdInSystem"/>
+        <munit:assert-payload-equals message="It is not the expected Updated Landing Page Response" expectedValue="#[flowVars.expectedGetLandingPageTemplateResponse1234029105180457604]" doc:name="Assert Payload for expected Updated Landing Page Response"/>
+    </munit:test>
+    <munit:test name="GivenAnUpdateDocumentTemplateByIdRequestWhenUpdateLandingPageTemplateByIdInSystemThenRequestIsSendByConnectorToTheSystem" description="GivenAnUpdateDocumentTemplateByIdRequestWhenUpdateLandingPageTemplateByIdInSystemThenRequestIsSendByConnectorToTheSystem">
+        <mock:when messageProcessor="mule:sub-flow" doc:name="Mock - tranformPayloadToUpdateLandingPageTemplateRequestPojo">
+            <mock:with-attributes>
+                <mock:with-attribute name="name" whereValue="#[matchContains('tranformPayloadToUpdateLandingPageTemplateRequestPojo')]"/>
+            </mock:with-attributes>
+            <mock:then-return payload="#[flowVars.expectedUpdateLandingPageTemplateRequestPojo]"/>
+        </mock:when>
+        <mock:when messageProcessor="newtoms-landing-page-exp-api:update-landing-page-template" doc:name="Mock - Update landing page template">
+            <mock:with-attributes>
+                <mock:with-attribute name="doc:name" whereValue="#['Update landing page template']"/>
+            </mock:with-attributes>
+            <mock:then-return payload="#[flowVars.expectedGetLandingPageTemplateResponse1234029105180457604]"/>
+        </mock:when>
+        <flow-ref name="setUpdateDocumentTemplateByIdRequest" doc:name="setUpdateDocumentTemplateByIdRequest"/>
+        <set-variable variableName="documentId" value="#[1]" doc:name="set documentId Variable"/>
+        <flow-ref name="updateLandingPageTemplateByIdInSystem" doc:name="Flow-ref to updateLandingPageTemplateByIdInSystem"/>
+        <mock:verify-call messageProcessor="newtoms-landing-page-exp-api:update-landing-page-template" doc:name="Verify Update landing page template Call">
+            <mock:with-attributes>
+                <mock:with-attribute name="doc:name" whereValue="#['Update landing page template']"/>
+                <mock:with-attribute name="entity-ref" whereValue="#[flowVars.expectedUpdateLandingPageTemplateRequestPojo]"/>
+                <mock:with-attribute name="id" whereValue="#[1]"/>
+            </mock:with-attributes>
+        </mock:verify-call>
+    </munit:test>
+    <munit:test name="Functional-GivenAnUpdateDocumentTemplateByIdRequestWhenUpdateLandingPageTemplateByIdInSystemThenReturnAResponse" description="GivenAnUpdateDocumentTemplateByIdRequestWhenUpdateLandingPageTemplateByIdInSystemThenReturnAResponse" ignore="true">
+        <mock:when messageProcessor="newtoms-landing-page-exp-api:update-landing-page-template" doc:name="Mock - Update landing page template">
+            <mock:with-attributes>
+                <mock:with-attribute name="doc:name" whereValue="#['Update landing page template']"/>
+            </mock:with-attributes>
+            <mock:then-return payload="#[flowVars.expectedGetLandingPageTemplateResponse1234029105180457604]"/>
+        </mock:when>
+        <flow-ref name="setUpdateDocumentTemplateByIdRequest" doc:name="setUpdateDocumentTemplateByIdRequest"/>
+        <set-variable variableName="documentId" value="#[1]" doc:name="set documentId Variable"/>
+        <flow-ref name="updateLandingPageTemplateByIdInSystem" doc:name="Flow-ref to updateLandingPageTemplateByIdInSystem"/>
+        <munit:assert-not-null doc:name="Assert Not Null Payload"/>
+    </munit:test>
+    <munit:test name="GivenAnUpdateDocumentTemplateByIdRequestWhenTranformPayloadToUpdateLandingPageTemplateRequestPojoThenReturnAResponse" description="GivenAnUpdateDocumentTemplateByIdRequestWhenTranformPayloadToUpdateLandingPageTemplateRequestPojoThenReturnAResponse">
+        <flow-ref name="setUpdateDocumentTemplateByIdRequest" doc:name="setUpdateDocumentTemplateByIdRequest"/>
+        <flow-ref name="tranformPayloadToUpdateLandingPageTemplateRequestPojo" doc:name="Flow-ref to tranformPayloadToUpdateLandingPageTemplateRequestPojo"/>
+        <munit:assert-not-null doc:name="Assert Not Null Payload"/>
+    </munit:test>
+    <munit:test name="GivenAnUpdateDocumentTemplateByIdRequestWhenTranformPayloadToUpdateLandingPageTemplateRequestPojoThenReturnAUpdateLandingPageTemplateRequestPojo" description="GivenAnUpdateDocumentTemplateByIdRequestWhenTranformPayloadToUpdateLandingPageTemplateRequestPojoThenReturnAUpdateLandingPageTemplateRequestPojo">
+        <flow-ref name="setUpdateDocumentTemplateByIdRequest" doc:name="setUpdateDocumentTemplateByIdRequest"/>
+        <flow-ref name="tranformPayloadToUpdateLandingPageTemplateRequestPojo" doc:name="Flow-ref to tranformPayloadToUpdateLandingPageTemplateRequestPojo"/>
+        <munit:assert-true message="Payload is not instance of UpdateLandingPageTemplateRequest3747331852031985512" condition="#[payload is restc_18fb7fded35c4b58b29707464da7ce2b.teamvenezuela.newtoms_landing_page_exp_api.pojo.updatelandingpagetemplaterequest.UpdateLandingPageTemplateRequest3747331852031985512]" doc:name="Assert True a payload instance of UpdateLandingPageTemplateRequest3747331852031985512"/>
+        <json:object-to-json-transformer doc:name="Object to JSON"/>
+        <munit:assert-payload-equals message="It is not the Expected UpdateLandingPageTemplateRequestPojo" expectedValue="{&quot;documentType&quot;:&quot;Whitepaper&quot;,&quot;documentTitle&quot;:&quot;Best practices for microservices&quot;,&quot;documentDescription&quot;:&quot;Today's business environment is extraordinarily competitive. No company – no matter its size or what industry it is in – is safe from disruption. To mitigate this risk, it's important to consider implementing microservices best practices in order to change quickly, innovate easily, and meet competition wherever it arises.&quot;,&quot;documentUrl&quot;:&quot;https://www.mulesoft.com/sites/default/files/resource-assets/wp_Best%20Practices%20for%20Microservices%20Whitepaper%20Research.pdf&quot;}" doc:name="Assert Payload for expected UpdateLandingPageTemplateRequestPojo"/>
+    </munit:test>
+    <munit:test name="GivenANewLeadRequestWhenTranformPayloadToCreateNewLeadRequestPojoThenReturnAResponse" description="GivenANewLeadRequestWhenTranformPayloadToCreateNewLeadRequestPojoThenReturnAResponse">
+        <flow-ref name="getNewLeadRequest" doc:name="getNewLeadRequest"/>
+        <flow-ref name="tranformPayloadToCreateNewLeadRequestPojo" doc:name="Flow-ref to tranformPayloadToCreateNewLeadRequestPojo"/>
+        <munit:assert-not-null doc:name="Assert Not Null Payload"/>
+    </munit:test>
+    <munit:test name="GivenANewLeadRequestWhenTranformPayloadToCreateNewLeadRequestPojoThenReturnACreateNewLeadRequest" description="GivenANewLeadRequestWhenTranformPayloadToCreateNewLeadRequestPojoThenReturnACreateNewLeadRequest">
+        <flow-ref name="getNewLeadRequest" doc:name="getNewLeadRequest"/>
+        <flow-ref name="tranformPayloadToCreateNewLeadRequestPojo" doc:name="Flow-ref to tranformPayloadToCreateNewLeadRequestPojo"/>
+        <munit:assert-true message="Payload is not instance of CreateNewLeadRequest" condition="#[payload is restc_18fb7fded35c4b58b29707464da7ce2b.teamvenezuela.newtoms_landing_page_exp_api.pojo.createnewleadrequest.CreateNewLeadRequest5024335287740653857]" doc:name="Assert True for Payload is a CreateNewLeadRequest"/>
+        <json:object-to-json-transformer doc:name="Object to JSON"/>
+        <munit:assert-payload-equals message="It is not the expected CreateNewLeadRequest" expectedValue="{&quot;firstName&quot;:&quot;Victor&quot;,&quot;lastName&quot;:&quot;Luna&quot;,&quot;company&quot;:&quot;Newtoms&quot;,&quot;title&quot;:&quot;Developer&quot;,&quot;email&quot;:&quot;victor.luna@newtoms.com&quot;}" doc:name="Assert Payload for expected CreateNewLeadRequest"/>
+    </munit:test>
+</mule>

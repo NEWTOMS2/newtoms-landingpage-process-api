@@ -10,6 +10,8 @@ http://www.mulesoft.org/schema/mule/mock http://www.mulesoft.org/schema/mule/moc
         <spring:import resource="classpath:newtoms_landing_page_exp_api.xml"/>
         <spring:import resource="classpath:newtoms_landing_page_exp_api_config.xml"/>
         <spring:import resource="classpath:newtoms_landing_page_business.xml"/>
+        <spring:import resource="classpath:newtoms_landing_page_sys_api.xml"/>
+        <spring:import resource="classpath:newtoms_landing_page_sys_api_config.xml"/>
         <spring:import resource="classpath:messages-for-test-suite.xml"/>
     </spring:beans>
     <global-property name="https.port" value="443" doc:name="Global Property"/>
@@ -17,6 +19,7 @@ http://www.mulesoft.org/schema/mule/mock http://www.mulesoft.org/schema/mule/moc
     <global-property name="https.keystore.alias" value="mule" doc:name="Global Property"/>
     <global-property name="https.keystore.keyPassword" value="mulePrcD3vN3wt0ms" doc:name="Global Property"/>
     <global-property name="https.keystore.password" value="mulePrcD3vN3wt0ms" doc:name="Global Property"/>
+    <global-property name="newtoms.landing.page.sys.api.apiUrl" value="https://mocksvc.mulesoft.com/mocks/bd61be4a-c2b5-49ad-a910-33c7624b6afb" doc:name="Global Property"/>
     <munit:before-test name="newtoms_landing_page_exp_api-test-suiteBefore_Test" description="Before tests actions">
         <flow-ref name="setExpectedDocumentTemplatesByIdList" doc:name="setExpectedDocumentTemplatesByIdList"/>
         <flow-ref name="setExpectedCreatedLeadCompleteResponse" doc:name="setExpectedCreatedLeadCompleteResponse"/>

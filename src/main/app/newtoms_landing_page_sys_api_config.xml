@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:newtoms-landing-page-exp-api="http://www.mulesoft.org/schema/mule/newtoms-landing-page-exp-api" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:spring="http://www.springframework.org/schema/beans" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd
+http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/newtoms-landing-page-exp-api http://www.mulesoft.org/schema/mule/newtoms-landing-page-exp-api/current/mule-newtoms-landing-page-exp-api.xsd">
+    <newtoms-landing-page-exp-api:Configuration name="newtoms_landing_page_sys_api__Configuration" doc:name="newtoms_landing_page_exp_api: Configuration" apiUrl="${newtoms.landing.page.sys.api.apiUrl}"/>
+</mule>

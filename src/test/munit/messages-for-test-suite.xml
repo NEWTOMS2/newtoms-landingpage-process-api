@@ -1,11 +1,77 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<mule xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:munit="http://www.mulesoft.org/schema/mule/munit" xmlns:spring="http://www.springframework.org/schema/beans" xmlns:json="http://www.mulesoft.org/schema/mule/json" xmlns:dw="http://www.mulesoft.org/schema/mule/ee/dw" xmlns:core="http://www.mulesoft.org/schema/mule/core" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/munit http://www.mulesoft.org/schema/mule/munit/current/mule-munit.xsd
+<mule xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:munit="http://www.mulesoft.org/schema/mule/munit" xmlns:spring="http://www.springframework.org/schema/beans" xmlns:json="http://www.mulesoft.org/schema/mule/json" xmlns:metadata="http://www.mulesoft.org/schema/mule/metadata" xmlns:dw="http://www.mulesoft.org/schema/mule/ee/dw" xmlns:core="http://www.mulesoft.org/schema/mule/core" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/munit http://www.mulesoft.org/schema/mule/munit/current/mule-munit.xsd
 http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd
 http://www.mulesoft.org/schema/mule/json http://www.mulesoft.org/schema/mule/json/current/mule-json.xsd
 http://www.mulesoft.org/schema/mule/ee/dw http://www.mulesoft.org/schema/mule/ee/dw/current/dw.xsd
 http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd">
     <munit:config mock-connectors="false" mock-inbounds="false" name="munit" doc:name="MUnit configuration"/>
+    <sub-flow name="setExpectedUpdateLandingPageTemplateRequestPojo">
+        <dw:transform-message doc:name="Transform Message">
+            <dw:set-variable variableName="expectedUpdateLandingPageTemplateRequestPojo"><![CDATA[%dw 1.0
+%output application/java
+---
+{
+   documentType:"Whitepaper",
+   documentTitle:"Best practices for microservices",
+   documentDescription:"Today's business environment is extraordinarily competitive. No company – no matter its size or what industry it is in – is safe from disruption. To mitigate this risk, it's important to consider implementing microservices best practices in order to change quickly, innovate easily, and meet competition wherever it arises.",
+   documentUrl:"https://www.mulesoft.com/sites/default/files/resource-assets/wp_Best%20Practices%20for%20Microservices%20Whitepaper%20Research.pdf"
+} as :object {
+	class : "restc_18fb7fded35c4b58b29707464da7ce2b.teamvenezuela.newtoms_landing_page_exp_api.pojo.updatelandingpagetemplaterequest.UpdateLandingPageTemplateRequest3747331852031985512"
+}]]></dw:set-variable>
+        </dw:transform-message>
+    </sub-flow>
+    <sub-flow name="setExpectedGetLandingPageTemplateResponse1234029105180457604">
+        <dw:transform-message doc:name="Transform Message" metadata:id="fcf0a61d-040c-46a2-8eda-34cf0a3c087d">
+            <dw:set-variable variableName="expectedGetLandingPageTemplateResponse1234029105180457604"><![CDATA[%dw 1.0
+%output application/java
+---
+{
+	documentId: 1,
+	documentType: "Whitepaper",
+	documentTitle: "Best practices for microservices",
+	documentDescription: "Today's business environment is extraordinarily competitive. No company â€“ no matter its size or what industry it is in â€“ is safe from disruption. To mitigate this risk, it's important to consider implementing microservices best practices in order to change quickly, innovate easily, and meet competition wherever it arises.",
+	documentUrl: "https://www.mulesoft.com/sites/default/files/resource-assets/wp_Best%20Practices%20for%20Microservices%20Whitepaper%20Research.pdf"
+} as :object {
+	class : "restc_18fb7fded35c4b58b29707464da7ce2b.teamvenezuela.newtoms_landing_page_exp_api.pojo.getlandingpagetemplateresponse.GetLandingPageTemplateResponse1234029105180457604"
+}]]></dw:set-variable>
+        </dw:transform-message>
+    </sub-flow>
+    <sub-flow name="setExpectedCreateNewLeadResponsePojo">
+        <dw:transform-message doc:name="Transform Message" metadata:id="a11fd71a-c71d-4acf-a65a-c6746310b323">
+            <dw:set-variable variableName="expectedCreateNewLeadResponsePojo"><![CDATA[%dw 1.0
+%output application/java
+---
+{
+   id:1,
+   firstName:"Victor",
+   lastName:"Luna",
+   company:"Newtoms",
+   title:"Developer",
+   email:"victor.luna@newtoms.com",
+   status:"Created",
+   links:[
+      {
+         rel:"/linkrels/lead/info",
+         uri:"/landingpage/lead/1234",
+         method:"GET"
+      },
+      {
+         rel:"/linkrels/lead/updateInfo",
+         uri:"/landingpage/lead/1234",
+         method:"PUT"
+      },
+      {
+         rel:"/linkrels/lead/delete",
+         uri:"/landingpage/lead/1234",
+         method:"DELETE"
+      }
+   ]
+} as :object {
+	class : "restc_18fb7fded35c4b58b29707464da7ce2b.teamvenezuela.newtoms_landing_page_exp_api.pojo.createnewleadresponse.CreateNewLeadResponse3529268344985499790"
+}]]></dw:set-variable>
+        </dw:transform-message>
+    </sub-flow>
     <sub-flow name="setExpectedUpdateDocumentTemplatesById">
         <dw:transform-message doc:name="Transform Message">
             <dw:set-variable variableName="expectedUpdateDocumentTemplatesById"><![CDATA[%dw 1.0
@@ -48,7 +114,7 @@ http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/cor
    documentId:1,
    documentType:"Whitepaper",
    documentTitle:"Best practices for microservices",
-   documentDescription:"Today's business environment is extraordinarily competitive. No company – no matter its size or what industry it is in – is safe from disruption. To mitigate this risk, it's important to consider implementing microservices best practices in order to change quickly, innovate easily, and meet competition wherever it arises.",
+   documentDescription:"Today's business environment is extraordinarily competitive. No company ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Å“ no matter its size or what industry it is in ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Å“ is safe from disruption. To mitigate this risk, it's important to consider implementing microservices best practices in order to change quickly, innovate easily, and meet competition wherever it arises.",
    documentUrl:"https://www.mulesoft.com/sites/default/files/resource-assets/wp_Best%20Practices%20for%20Microservices%20Whitepaper%20Research.pdf"
 }]]></dw:set-payload>
         </dw:transform-message>
@@ -147,7 +213,7 @@ http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/cor
 		idDocumentTemplates:1,
 		Title:"Best practices for microservices",
 		Type:"Whitepaper",
-		Description:"Today's business environment is extraordinarily competitive. No company – no matter its size or what industry it is in – is safe from disruption. To mitigate this risk, it's important to consider implementing microservices best practices in order to change quickly, innovate easily, and meet competition wherever it arises.",
+		Description:"Today's business environment is extraordinarily competitive. No company ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Å“ no matter its size or what industry it is in ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Å“ is safe from disruption. To mitigate this risk, it's important to consider implementing microservices best practices in order to change quickly, innovate easily, and meet competition wherever it arises.",
 		DownloadUrl:"https://www.mulesoft.com/sites/default/files/resource-assets/wp_Best%20Practices%20for%20Microservices%20Whitepaper%20Research.pdf"
 	}
 ]]]></dw:set-variable>
@@ -155,7 +221,7 @@ http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/cor
     </sub-flow>
     <sub-flow name="assertForExpectedDocumentTemplateResponse">
         <json:object-to-json-transformer doc:name="Object to JSON"/>
-        <munit:assert-payload-equals message="It is not the expected Document Template" expectedValue="{&quot;idDocumentTemplates&quot;:1,&quot;Title&quot;:&quot;Best practices for microservices&quot;,&quot;Type&quot;:&quot;Whitepaper&quot;,&quot;Description&quot;:&quot;Today's business environment is extraordinarily competitive. No company – no matter its size or what industry it is in – is safe from disruption. To mitigate this risk, it's important to consider implementing microservices best practices in order to change quickly, innovate easily, and meet competition wherever it arises.&quot;,&quot;DownloadUrl&quot;:&quot;https://www.mulesoft.com/sites/default/files/resource-assets/wp_Best%20Practices%20for%20Microservices%20Whitepaper%20Research.pdf&quot;}" doc:name="Assert for expected Payload with Document Templete Configuration"/>
+        <munit:assert-payload-equals message="It is not the expected Document Template" expectedValue="{&quot;idDocumentTemplates&quot;:1,&quot;Title&quot;:&quot;Best practices for microservices&quot;,&quot;Type&quot;:&quot;Whitepaper&quot;,&quot;Description&quot;:&quot;Today's business environment is extraordinarily competitive. No company ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Å“ no matter its size or what industry it is in ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Å“ is safe from disruption. To mitigate this risk, it's important to consider implementing microservices best practices in order to change quickly, innovate easily, and meet competition wherever it arises.&quot;,&quot;DownloadUrl&quot;:&quot;https://www.mulesoft.com/sites/default/files/resource-assets/wp_Best%20Practices%20for%20Microservices%20Whitepaper%20Research.pdf&quot;}" doc:name="Assert for expected Payload with Document Templete Configuration"/>
     </sub-flow>
     <sub-flow name="assertForACompleteLeadResponse">
         <json:object-to-json-transformer doc:name="Object to JSON"/>
