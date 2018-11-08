@@ -46,7 +46,7 @@ http://www.mulesoft.org/schema/mule/ee/dw http://www.mulesoft.org/schema/mule/ee
 
     </flow>
     <sub-flow name="postLeadFromLandingPage">
-        <json:json-to-object-transformer doc:name="JSON to Object" returnClass="java.util.Map" />
+        <json:json-to-object-transformer doc:name="JSON to Object"  />
         <flow-ref name="createANewLeadFromLandingPage" doc:name="createANewLeadFromLandingPage" />
         <json:object-to-json-transformer doc:name="Object to JSON" />
         <set-property propertyName="Content-Type" value="application/json" doc:name="set Content-Type Property" />
