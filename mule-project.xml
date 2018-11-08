@@ -2,4 +2,5 @@
 <mule-project xmlns="http://www.mulesoft.com/tooling/project" runtimeId="org.mule.tooling.server.3.9.1.ee" schemaVersion="5.3.0.0">
     <name>newtoms-landingpage-process-api</name>
     <description></description>
+    <muleExtension name="newtoms_landing_page_exp_api" qualifier="org.mule.tooling.ui.contribution.newtoms-landing-page-exp-api.3.6.0"/>
 </mule-project>

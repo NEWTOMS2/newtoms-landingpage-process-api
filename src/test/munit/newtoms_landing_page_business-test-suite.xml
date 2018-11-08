@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:munit="http://www.mulesoft.org/schema/mule/munit" xmlns:spring="http://www.springframework.org/schema/beans" xmlns:core="http://www.mulesoft.org/schema/mule/core" xmlns:mock="http://www.mulesoft.org/schema/mule/mock" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/munit http://www.mulesoft.org/schema/mule/munit/current/mule-munit.xsd
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd
+http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/mock http://www.mulesoft.org/schema/mule/mock/current/mule-mock.xsd">
+    <munit:config name="munit" doc:name="MUnit configuration"/>
+    <spring:beans>
+        <spring:import resource="classpath:newtoms_landing_page_business.xml"/>
+        <spring:import resource="classpath:newtoms_landing_page_sys_api.xml"/>
+        <spring:import resource="classpath:newtoms_landing_page_sys_api_config.xml"/>
+        <spring:import resource="classpath:messages-for-test-suite.xml"/>
+    </spring:beans>
+    <global-property name="newtoms.landing.page.sys.api.apiUrl" value="https://mocksvc.mulesoft.com/mocks/bd61be4a-c2b5-49ad-a910-33c7624b6afb" doc:name="Global Property"/>
+    <munit:before-test name="newtoms_landing_page_sys_api-test-suiteBefore_Test" description="Before tests actions">
+        <flow-ref name="setExpectedCreateNewLeadResponsePojo" doc:name="setExpectedCreateNewLeadResponsePojo"/>
+        <flow-ref name="setExpectedGetLandingPageTemplateResponse1234029105180457604" doc:name="setExpectedGetLandingPageTemplateResponse1234029105180457604"/>
+    </munit:before-test>
+    <munit:test name="GivenAGetLandingPageTemplateByIdRequestWhenGetDocumentTemplateConfigByIdForLandingPageThenReturnAResponse" description="GivenAGetLandingPageTemplateByIdRequestWhenGetDocumentTemplateConfigByIdForLandingPageThenReturnAResponse">
+        <mock:when messageProcessor="mule:sub-flow" doc:name="Mock - getLandingPageTemplateByIdInSystem">
+            <mock:with-attributes>
+                <mock:with-attribute name="name" whereValue="#[matchContains('getLandingPageTemplateByIdInSystem')]"/>
+            </mock:with-attributes>
+            <mock:then-return payload="#[flowVars.expectedGetLandingPageTemplateResponse1234029105180457604]"/>
+        </mock:when>
+        <flow-ref name="setGetLandingPageTemplateByIdRequest" doc:name="setGetLandingPageTemplateByIdRequest"/>
+        <flow-ref name="getDocumentTemplateConfigByIdForLandingPage" doc:name="Flow-ref to getDocumentTemplateConfigByIdForLandingPage"/>
+        <munit:assert-not-null doc:name="Assert Not Null Payload"/>
+    </munit:test>
+    <munit:test name="GivenAGetLandingPageTemplateByIdRequestWhenGetDocumentTemplateConfigByIdForLandingPageThenReturnAGetLandingPageTemplateResponse" description="GivenAGetLandingPageTemplateByIdRequestWhenGetDocumentTemplateConfigByIdForLandingPageThenReturnAGetLandingPageTemplateResponse">
+        <mock:when messageProcessor="mule:sub-flow" doc:name="Mock - getLandingPageTemplateByIdInSystem">
+            <mock:with-attributes>
+                <mock:with-attribute name="name" whereValue="#[matchContains('getLandingPageTemplateByIdInSystem')]"/>
+            </mock:with-attributes>
+            <mock:then-return payload="#[flowVars.expectedGetLandingPageTemplateResponse1234029105180457604]"/>
+        </mock:when>
+        <flow-ref name="setGetLandingPageTemplateByIdRequest" doc:name="setGetLandingPageTemplateByIdRequest"/>
+        <flow-ref name="getDocumentTemplateConfigByIdForLandingPage" doc:name="Flow-ref to getDocumentTemplateConfigByIdForLandingPage"/>
+        <munit:assert-payload-equals message="It is not the expected GetLandingPageTemplateResponse" expectedValue="#[flowVars.expectedGetLandingPageTemplateResponse1234029105180457604]" doc:name="Assert Payload for Expected GetLandingPageTemplateResponse"/>
+    </munit:test>
+    <munit:test name="GivenAGetLandingPageTemplateByIdRequestWhenGetDocumentTemplateConfigByIdForLandingPageThenCallGetLandingPageTemplateByIdInSystem" description="GivenAGetLandingPageTemplateByIdRequestWhenGetDocumentTemplateConfigByIdForLandingPageThenCallGetLandingPageTemplateByIdInSystem">
+        <mock:when messageProcessor="mule:sub-flow" doc:name="Mock - getLandingPageTemplateByIdInSystem">
+            <mock:with-attributes>
+                <mock:with-attribute name="name" whereValue="#[matchContains('getLandingPageTemplateByIdInSystem')]"/>
+            </mock:with-attributes>
+            <mock:then-return payload="#[flowVars.expectedGetLandingPageTemplateResponse1234029105180457604]"/>
+        </mock:when>
+        <flow-ref name="setGetLandingPageTemplateByIdRequest" doc:name="setGetLandingPageTemplateByIdRequest"/>
+        <flow-ref name="getDocumentTemplateConfigByIdForLandingPage" doc:name="Flow-ref to getDocumentTemplateConfigByIdForLandingPage"/>
+        <mock:verify-call messageProcessor="mule:sub-flow" doc:name="Verify getLandingPageTemplateByIdInSystem Call">
+            <mock:with-attributes>
+                <mock:with-attribute name="name" whereValue="#[matchContains('getLandingPageTemplateByIdInSystem')]"/>
+            </mock:with-attributes>
+        </mock:verify-call>
+    </munit:test>
+    <munit:test name="GivenANewLeadRequestWhenCreateANewLeadFromLandingPageThenReturnAResponse" description="GivenANewLeadRequestWhenCreateANewLeadFromLandingPageThenReturnAResponse">
+        <mock:when messageProcessor="mule:sub-flow" doc:name="Mock - createNewLeadInSystem">
+            <mock:with-attributes>
+                <mock:with-attribute name="name" whereValue="#[matchContains('createNewLeadInSystem')]"/>
+            </mock:with-attributes>
+            <mock:then-return payload="#[flowVars.expectedCreateNewLeadResponsePojo]"/>
+        </mock:when>
+        <flow-ref name="getNewLeadRequest" doc:name="getNewLeadRequest"/>
+        <flow-ref name="createANewLeadFromLandingPage" doc:name="Flow-ref to createANewLeadFromLandingPage"/>
+        <munit:assert-not-null doc:name="Assert Not Null Payload"/>
+    </munit:test>
+    <munit:test name="GivenANewLeadRequestWhenCreateANewLeadFromLandingPageThenReturnACreateNewLeadResponsePojo" description="GivenANewLeadRequestWhenCreateANewLeadFromLandingPageThenReturnACreateNewLeadResponsePojo">
+        <mock:when messageProcessor="mule:sub-flow" doc:name="Mock - createNewLeadInSystem">
+            <mock:with-attributes>
+                <mock:with-attribute name="name" whereValue="#[matchContains('createNewLeadInSystem')]"/>
+            </mock:with-attributes>
+            <mock:then-return payload="#[flowVars.expectedCreateNewLeadResponsePojo]"/>
+        </mock:when>
+        <flow-ref name="getNewLeadRequest" doc:name="getNewLeadRequest"/>
+        <flow-ref name="createANewLeadFromLandingPage" doc:name="Flow-ref to createANewLeadFromLandingPage"/>
+        <munit:assert-payload-equals message="It is not the expected CreateNewLeadResponsePojo" expectedValue="#[flowVars.expectedCreateNewLeadResponsePojo]" doc:name="Assert Payload for expected CreateNewLeadResponsePojo"/>
+    </munit:test>
+    <munit:test name="GivenANewLeadRequestWhenCreateANewLeadFromLandingPageThenCallCreateNewLeadInSystem" description="GivenANewLeadRequestWhenCreateANewLeadFromLandingPageThenCallCreateNewLeadInSystem">
+        <mock:when messageProcessor="mule:sub-flow" doc:name="Mock - createNewLeadInSystem">
+            <mock:with-attributes>
+                <mock:with-attribute name="name" whereValue="#[matchContains('createNewLeadInSystem')]"/>
+            </mock:with-attributes>
+            <mock:then-return payload="#[flowVars.expectedCreateNewLeadResponsePojo]"/>
+        </mock:when>
+        <flow-ref name="getNewLeadRequest" doc:name="getNewLeadRequest"/>
+        <flow-ref name="createANewLeadFromLandingPage" doc:name="Flow-ref to createANewLeadFromLandingPage"/>
+        <mock:verify-call messageProcessor="mule:sub-flow" doc:name="Verify createNewLeadInSystem Call">
+            <mock:with-attributes>
+                <mock:with-attribute name="name" whereValue="#[matchContains('createNewLeadInSystem')]"/>
+            </mock:with-attributes>
+        </mock:verify-call>
+    </munit:test>
+    <munit:test name="GivenAnUpdateDocumentTemplateByIdRequestWhenUpdateDocumentTemplateConfigByIdForLandingPageThenReturnAResponse" description="GivenAnUpdateDocumentTemplateByIdRequestWhenUpdateDocumentTemplateConfigByIdForLandingPageThenReturnAResponse">
+        <mock:when messageProcessor="mule:sub-flow" doc:name="Mock - updateLandingPageTemplateByIdInSystem">
+            <mock:with-attributes>
+                <mock:with-attribute name="name" whereValue="#[matchContains('updateLandingPageTemplateByIdInSystem')]"/>
+            </mock:with-attributes>
+            <mock:then-return payload="#[flowVars.expectedGetLandingPageTemplateResponse1234029105180457604]"/>
+        </mock:when>
+        <flow-ref name="setUpdateDocumentTemplateByIdRequest" doc:name="setUpdateDocumentTemplateByIdRequest"/>
+        <set-variable variableName="documentId" value="#[1]" doc:name="set documentId Variable"/>
+        <flow-ref name="updateDocumentTemplateConfigByIdForLandingPage" doc:name="Flow-ref to updateDocumentTemplateConfigByIdForLandingPage"/>
+        <munit:assert-not-null doc:name="Assert Not Null Payload"/>
+    </munit:test>
+    <munit:test name="GivenAnUpdateDocumentTemplateByIdRequestWhenUpdateDocumentTemplateConfigByIdForLandingPageThenReturnAUpdatedLandingPageTemplateResponse" description="GivenAnUpdateDocumentTemplateByIdRequestWhenUpdateDocumentTemplateConfigByIdForLandingPageThenReturnAUpdatedLandingPageTemplateResponse">
+        <mock:when messageProcessor="mule:sub-flow" doc:name="Mock - updateLandingPageTemplateByIdInSystem">
+            <mock:with-attributes>
+                <mock:with-attribute name="name" whereValue="#[matchContains('updateLandingPageTemplateByIdInSystem')]"/>
+            </mock:with-attributes>
+            <mock:then-return payload="#[flowVars.expectedGetLandingPageTemplateResponse1234029105180457604]"/>
+        </mock:when>
+        <flow-ref name="setUpdateDocumentTemplateByIdRequest" doc:name="setUpdateDocumentTemplateByIdRequest"/>
+        <set-variable variableName="documentId" value="#[1]" doc:name="set documentId Variable"/>
+        <flow-ref name="updateDocumentTemplateConfigByIdForLandingPage" doc:name="Flow-ref to updateDocumentTemplateConfigByIdForLandingPage"/>
+        <munit:assert-payload-equals message="It is not the expected UpdatedLandingPageTemplateResponse" expectedValue="#[flowVars.expectedGetLandingPageTemplateResponse1234029105180457604]" doc:name="Assert Payload for UpdatedLandingPageTemplateResponse"/>
+    </munit:test>
+    <munit:test name="GivenAnUpdateDocumentTemplateByIdRequestWhenUpdateDocumentTemplateConfigByIdForLandingPageThenCallUpdateLandingPageTemplateByIdInSystem" description="GivenAnUpdateDocumentTemplateByIdRequestWhenUpdateDocumentTemplateConfigByIdForLandingPageThenCallUpdateLandingPageTemplateByIdInSystem">
+        <mock:when messageProcessor="mule:sub-flow" doc:name="Mock - updateLandingPageTemplateByIdInSystem">
+            <mock:with-attributes>
+                <mock:with-attribute name="name" whereValue="#[matchContains('updateLandingPageTemplateByIdInSystem')]"/>
+            </mock:with-attributes>
+            <mock:then-return payload="#[flowVars.expectedGetLandingPageTemplateResponse1234029105180457604]"/>
+        </mock:when>
+        <flow-ref name="setUpdateDocumentTemplateByIdRequest" doc:name="setUpdateDocumentTemplateByIdRequest"/>
+        <set-variable variableName="documentId" value="#[1]" doc:name="set documentId Variable"/>
+        <flow-ref name="updateDocumentTemplateConfigByIdForLandingPage" doc:name="Flow-ref to updateDocumentTemplateConfigByIdForLandingPage"/>
+        <mock:verify-call messageProcessor="mule:sub-flow" doc:name="Verify updateLandingPageTemplateByIdInSystem Call">
+            <mock:with-attributes>
+                <mock:with-attribute name="name" whereValue="#[matchContains('updateLandingPageTemplateByIdInSystem')]"/>
+            </mock:with-attributes>
+        </mock:verify-call>
+    </munit:test>
+</mule>

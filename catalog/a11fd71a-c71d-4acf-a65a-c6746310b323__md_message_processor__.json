@@ -1,0 +1,11 @@
+{
+    "inputMessageMetadata": {},
+    "outputMessageMetadata": {
+        "messagePayload": {
+            "connectorName": "#_custom_mule_metadata_type_#",
+            "typeId": "CreateNewLeadResponsePojo"
+        }
+    },
+    "id": "a11fd71a-c71d-4acf-a65a-c6746310b323",
+    "version": "5.2.0.0"
+}
