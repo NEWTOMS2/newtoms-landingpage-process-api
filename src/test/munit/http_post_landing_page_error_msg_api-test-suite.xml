@@ -76,14 +76,14 @@ http://www.mulesoft.org/schema/mule/tls http://www.mulesoft.org/schema/mule/tls/
         </http:request>
         <munit:assert-on-equals message="It is not the expected HTTP Status Code for the response" expectedValue="#[415]" actualValue="#[message.inboundProperties.'http.status']" doc:name="Assert Equals for Expected HTTP 415 Status Code Response"/>
     </munit:test>
-    <munit:test name="FuntionalTest-GivenANullNewLeadRequestWhenPostRequestToLandingPageAPIThenReturnExpectedContentType" description="FuntionalTest-GivenANullNewLeadRequestWhenPostRequestToLandingPageAPIThenReturnExpectedContentType">
+    <munit:test name="FuntionalTest-GivenANullNewLeadRequestWhenPostRequestToLandingPageAPIThenReturnExpectedResponseHeaders" description="FuntionalTest-GivenANullNewLeadRequestWhenPostRequestToLandingPageAPIThenReturnExpectedResponseHeaders">
         <flow-ref name="getNewLeadRequest" doc:name="getNewLeadRequest"/>
         <json:object-to-json-transformer doc:name="Object to JSON"/>
         <munit:set-null-payload doc:name="Set Null Payload"/>
         <http:request config-ref="HTTP_Raml_Test_Request_Configuration" path="/landingpage/lead" method="POST" doc:name="HTTP-POST-CreateLead">
             <http:failure-status-code-validator values="500"/>
         </http:request>
-        <munit:assert-on-equals message="It is not the expected Content-Type for the response" expectedValue="#['application/json']" actualValue="#[message.inboundProperties.'Content-Type']" doc:name="Assert Equals for Expected Content-Type Response"/>
+        <flow-ref name="assertForExpectedResponseHeaders" doc:name="assertForExpectedResponseHeaders"/>
     </munit:test>
     <munit:test name="FuntionalTest-GivenAnInvalidCreateNewLeadRequestWhenPostRequestToLandingPageAPIThenReturnA400ErrorMessage" description="FuntionalTest-GivenAnInvalidCreateNewLeadRequestWhenPostRequestToLandingPageAPIThenReturnA400ErrorMessage">
         <flow-ref name="getNewLeadRequest" doc:name="getNewLeadRequest"/>
@@ -137,7 +137,7 @@ http://www.mulesoft.org/schema/mule/tls http://www.mulesoft.org/schema/mule/tls/
         </http:request>
         <munit:assert-on-equals message="It is not the expected HTTP Status Code for the response" expectedValue="#[400]" actualValue="#[message.inboundProperties.'http.status']" doc:name="Assert Equals for Expected HTTP 400 Status Code Response"/>
     </munit:test>
-    <munit:test name="FuntionalTest-GivenAnInvalidCreateNewLeadRequestWhenPostRequestToLandingPageAPIThenReturnExpectedContentType" description="FuntionalTest-GivenAnInvalidCreateNewLeadRequestWhenPostRequestToLandingPageAPIThenReturnExpectedContentType">
+    <munit:test name="FuntionalTest-GivenAnInvalidCreateNewLeadRequestWhenPostRequestToLandingPageAPIThenReturnExpectedResponseHeaders" description="FuntionalTest-GivenAnInvalidCreateNewLeadRequestWhenPostRequestToLandingPageAPIThenReturnExpectedResponseHeaders">
         <flow-ref name="getNewLeadRequest" doc:name="getNewLeadRequest"/>
         <json:object-to-json-transformer doc:name="Object to JSON"/>
         <dw:transform-message doc:name="Transform Message">
@@ -150,7 +150,7 @@ http://www.mulesoft.org/schema/mule/tls http://www.mulesoft.org/schema/mule/tls/
         <http:request config-ref="HTTP_Raml_Test_Request_Configuration" path="/landingpage/lead" method="POST" doc:name="HTTP-POST-CreateLead">
             <http:failure-status-code-validator values="500"/>
         </http:request>
-        <munit:assert-on-equals message="It is not the expected Content-Type for the response" expectedValue="#['application/json']" actualValue="#[message.inboundProperties.'Content-Type']" doc:name="Assert Equals for Expected Content-Type Response"/>
+        <flow-ref name="assertForExpectedResponseHeaders" doc:name="assertForExpectedResponseHeaders"/>
     </munit:test>
     <munit:test name="FuntionalTest-GivenANewLeadRequestWhenCallInvalidPostRequestToLandingPageAPIThenReturnA404ErrorMessage" description="FuntionalTest-GivenANewLeadRequestWhenCallInvalidPostRequestToLandingPageAPIThenReturnA404ErrorMessage">
         <flow-ref name="getNewLeadRequest" doc:name="getNewLeadRequest"/>
@@ -183,13 +183,13 @@ http://www.mulesoft.org/schema/mule/tls http://www.mulesoft.org/schema/mule/tls/
         </http:request>
         <munit:assert-on-equals message="It is not the expected HTTP Status Code for the response" expectedValue="#[404]" actualValue="#[message.inboundProperties.'http.status']" doc:name="Assert Equals for Expected HTTP 404 Status Code Response"/>
     </munit:test>
-    <munit:test name="FuntionalTest-GivenANewLeadRequestWhenCallInvalidPostRequestToLandingPageAPIThenReturnExpectedContentType" description="FuntionalTest-GivenANewLeadRequestWhenCallInvalidPostRequestToLandingPageAPIThenReturnExpectedContentType">
+    <munit:test name="FuntionalTest-GivenANewLeadRequestWhenCallInvalidPostRequestToLandingPageAPIThenReturnExpectedResponseHeaders" description="FuntionalTest-GivenANewLeadRequestWhenCallInvalidPostRequestToLandingPageAPIThenReturnExpectedResponseHeaders">
         <flow-ref name="getNewLeadRequest" doc:name="getNewLeadRequest"/>
         <json:object-to-json-transformer doc:name="Object to JSON"/>
         <http:request config-ref="HTTP_Invalid_Request_Configuration" path="/landingpage/leads" method="POST" doc:name="HTTP-POST-CreateLead">
             <http:failure-status-code-validator values="500"/>
         </http:request>
-        <munit:assert-on-equals message="It is not the expected Content-Type for the response" expectedValue="#['application/json']" actualValue="#[message.inboundProperties.'Content-Type']" doc:name="Assert Equals for Expected Content-Type Response"/>
+        <flow-ref name="assertForExpectedResponseHeaders" doc:name="assertForExpectedResponseHeaders"/>
     </munit:test>
     <munit:test name="FuntionalTest-GivenANewLeadRequestWhenPATCHRequestToLandingPageAPIThenReturnA405ErrorMessage" description="FuntionalTest-GivenANewLeadRequestWhenPATCHRequestToLandingPageAPIThenReturnA405ErrorMessage">
         <flow-ref name="getNewLeadRequest" doc:name="getNewLeadRequest"/>
@@ -222,13 +222,13 @@ http://www.mulesoft.org/schema/mule/tls http://www.mulesoft.org/schema/mule/tls/
         </http:request>
         <munit:assert-on-equals message="It is not the expected HTTP Status Code for the response" expectedValue="#[405]" actualValue="#[message.inboundProperties.'http.status']" doc:name="Assert Equals for Expected HTTP 405 Status Code Response"/>
     </munit:test>
-    <munit:test name="FuntionalTest-GivenANewLeadRequestWhenPATCHRequestToLandingPageAPIThenReturnExpectedContentType" description="FuntionalTest-GivenANewLeadRequestWhenPATCHRequestToLandingPageAPIThenReturnExpectedContentType">
+    <munit:test name="FuntionalTest-GivenANewLeadRequestWhenPATCHRequestToLandingPageAPIThenReturnExpectedResponseHeaders" description="FuntionalTest-GivenANewLeadRequestWhenPATCHRequestToLandingPageAPIThenReturnExpectedResponseHeaders">
         <flow-ref name="getNewLeadRequest" doc:name="getNewLeadRequest"/>
         <json:object-to-json-transformer doc:name="Object to JSON"/>
         <http:request config-ref="HTTP_Invalid_Request_Configuration" path="/landingpage/lead" method="PATCH" doc:name="HTTP-PATCH-CreateLead">
             <http:failure-status-code-validator values="500"/>
         </http:request>
-        <munit:assert-on-equals message="It is not the expected Content-Type for the response" expectedValue="#['application/json']" actualValue="#[message.inboundProperties.'Content-Type']" doc:name="Assert Equals for Expected Content-Type Response"/>
+        <flow-ref name="assertForExpectedResponseHeaders" doc:name="assertForExpectedResponseHeaders"/>
     </munit:test>
     <munit:test name="FuntionalTest-GivenAnInvalidAcceptContentTypeAsHeaderInNewLeadRequestWhenPostRequestToLandingPageAPIThenReturnA406ErrorMessage" description="FuntionalTest-GivenAnInvalidAcceptContentTypeAsHeaderInNewLeadRequestWhenPostRequestToLandingPageAPIThenReturnA406ErrorMessage">
         <flow-ref name="getNewLeadRequest" doc:name="getNewLeadRequest"/>
@@ -270,7 +270,7 @@ http://www.mulesoft.org/schema/mule/tls http://www.mulesoft.org/schema/mule/tls/
         </http:request>
         <munit:assert-on-equals message="It is not the expected HTTP Status Code for the response" expectedValue="#[406]" actualValue="#[message.inboundProperties.'http.status']" doc:name="Assert Equals for Expected HTTP 406 Status Code Response"/>
     </munit:test>
-    <munit:test name="FuntionalTest-GivenAnInvalidAcceptContentTypeAsHeaderInNewLeadRequestWhenPostRequestToLandingPageAPIThenReturnExpectedContentType" description="FuntionalTest-GivenAnInvalidAcceptContentTypeAsHeaderInNewLeadRequestWhenPostRequestToLandingPageAPIThenReturnExpectedContentType">
+    <munit:test name="FuntionalTest-GivenAnInvalidAcceptContentTypeAsHeaderInNewLeadRequestWhenPostRequestToLandingPageAPIThenReturnExpectedResponseHeaders" description="FuntionalTest-GivenAnInvalidAcceptContentTypeAsHeaderInNewLeadRequestWhenPostRequestToLandingPageAPIThenReturnExpectedResponseHeaders">
         <flow-ref name="getNewLeadRequest" doc:name="getNewLeadRequest"/>
         <json:object-to-json-transformer doc:name="Object to JSON"/>
         <http:request config-ref="HTTP_Raml_Test_Request_Configuration" path="/landingpage/lead" method="POST" doc:name="HTTP-POST-CreateLead">
@@ -279,7 +279,7 @@ http://www.mulesoft.org/schema/mule/tls http://www.mulesoft.org/schema/mule/tls/
             </http:request-builder>
             <http:failure-status-code-validator values="500"/>
         </http:request>
-        <munit:assert-on-equals message="It is not the expected Content-Type for the response" expectedValue="#['application/json']" actualValue="#[message.inboundProperties.'Content-Type']" doc:name="Assert Equals for Expected Content-Type Response"/>
+        <flow-ref name="assertForExpectedResponseHeaders" doc:name="assertForExpectedResponseHeaders"/>
     </munit:test>
     <munit:test name="FuntionalTest-GivenANewLeadRequestWhenPostRequestToLandingPageAPIAndSometingFailThenReturnA500ErrorMessage" description="FuntionalTest-GivenANewLeadRequestWhenPostRequestToLandingPageAPIAndSometingFailThenReturnA500ErrorMessage">
         <mock:throw-an exception-ref="#[new java.lang.Exception(&quot;Internal Server Error For Munit TEST.&quot;)]" whenCalling="mule:flow" doc:name="Throw an Exception when call - post:/landingpage/lead:application/json:newtoms_landing_page_exp_api-config">
@@ -327,7 +327,7 @@ http://www.mulesoft.org/schema/mule/tls http://www.mulesoft.org/schema/mule/tls/
         </http:request>
         <munit:assert-on-equals message="It is not the expected HTTP Status Code for the response" expectedValue="#[500]" actualValue="#[message.inboundProperties.'http.status']" doc:name="Assert Equals for Expected HTTP 500 Status Code Response"/>
     </munit:test>
-    <munit:test name="FuntionalTest-GivenANewLeadRequestWhenPostRequestToLandingPageAPIAndSometingFailThenReturnExpectedContentType" description="FuntionalTest-GivenANewLeadRequestWhenPostRequestToLandingPageAPIAndSometingFailThenReturnExpectedContentType">
+    <munit:test name="FuntionalTest-GivenANewLeadRequestWhenPostRequestToLandingPageAPIAndSometingFailThenReturnExpectedResponseHeaders" description="FuntionalTest-GivenANewLeadRequestWhenPostRequestToLandingPageAPIAndSometingFailThenReturnExpectedResponseHeaders">
         <mock:throw-an exception-ref="#[new java.lang.Exception(&quot;Internal Server Error For Munit TEST.&quot;)]" whenCalling="mule:flow" doc:name="Throw an Exception when call - post:/landingpage/lead:application/json:newtoms_landing_page_exp_api-config">
             <mock:with-attributes>
                 <mock:with-attribute name="name" whereValue="#[matchContains('post:/landingpage/lead:application/json:newtoms_landing_page_exp_api-config')]"/>
@@ -338,6 +338,6 @@ http://www.mulesoft.org/schema/mule/tls http://www.mulesoft.org/schema/mule/tls/
         <http:request config-ref="HTTP_Raml_Test_Request_Configuration" path="/landingpage/lead" method="POST" doc:name="HTTP-POST-CreateLead">
             <http:failure-status-code-validator values="400"/>
         </http:request>
-        <munit:assert-on-equals message="It is not the expected Content-Type for the response" expectedValue="#['application/json']" actualValue="#[message.inboundProperties.'Content-Type']" doc:name="Assert Equals for Expected Content-Type Response"/>
+        <flow-ref name="assertForExpectedResponseHeaders" doc:name="assertForExpectedResponseHeaders"/>
     </munit:test>
 </mule>
