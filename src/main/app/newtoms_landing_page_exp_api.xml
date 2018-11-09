@@ -18,8 +18,7 @@ http://www.mulesoft.org/schema/mule/ee/dw http://www.mulesoft.org/schema/mule/ee
         <flow-ref name="buildUpdateRequestWithGivenId" doc:name="buildUpdateRequestWithGivenId" />
         <flow-ref name="updateDocumentTemplateConfigByIdForLandingPage" doc:name="updateDocumentTemplateConfigByIdForLandingPage" />
         <json:object-to-json-transformer doc:name="Object to JSON" />
-        <flow-ref name="setResponseHeaders" doc:name="setResponseHeaders"/>
-
+        <flow-ref name="setResponseHeaders" doc:name="setResponseHeaders" />
     </sub-flow>
     <sub-flow name="buildUpdateRequestWithGivenId">
         <set-variable variableName="documentId" value="#[message.inboundProperties.'http.uri.params'.id]" doc:name="set documentId Variable" />
@@ -39,8 +38,7 @@ http://www.mulesoft.org/schema/mule/ee/dw http://www.mulesoft.org/schema/mule/ee
         <flow-ref name="getDocumentTemplateConfigByIdForLandingPage" doc:name="getDocumentTemplateConfigByIdForLandingPage" />
         <logger message="Landin Page Template with ID: #[flowVars.idDocumentTemplates] Content Title: #[payload.Title]" level="INFO" doc:name="Logger" />
         <json:object-to-json-transformer doc:name="Object to JSON" />
-        <flow-ref name="setResponseHeaders" doc:name="setResponseHeaders"/>
-
+        <flow-ref name="setResponseHeaders" doc:name="setResponseHeaders" />
     </sub-flow>
     <flow name="post:/landingpage/lead:application/json:newtoms_landing_page_exp_api-config">
         <flow-ref name="postLeadFromLandingPage" doc:name="postLeadFromLandingPage" />
@@ -49,13 +47,17 @@ http://www.mulesoft.org/schema/mule/ee/dw http://www.mulesoft.org/schema/mule/ee
         <json:json-to-object-transformer doc:name="JSON to Object" />
         <flow-ref name="createANewLeadFromLandingPage" doc:name="createANewLeadFromLandingPage" />
         <json:object-to-json-transformer doc:name="Object to JSON" />
-        <flow-ref name="setResponseHeaders" doc:name="setResponseHeaders"/>
-
+        <flow-ref name="setResponseHeaders" doc:name="setResponseHeaders" />
     </sub-flow>
+    <flow name="options:/landingpage/lead:newtoms_landing_page_exp_api-config">
+        <set-payload value="#[NullPayload.getInstance()]" doc:name="Set Payload"/>
+        <flow-ref name="setResponseHeaders" doc:name="setResponseHeaders"/>
+        <set-property propertyName="Access-Control-Allow-Headers" value="#['Origin, X-Requested-With, Content-Type']" doc:name="set Access-Control-Allow-Headers Property"/>
+    </flow>
     <sub-flow name="setResponseHeaders">
         <set-property propertyName="Content-Type" value="application/json" doc:name="set Content-Type Property" />
-        <set-property propertyName="Access-Control-Allow-Origin" value="*" doc:name="set Access-Control-Allow-Origin Property"/>
-        <set-property propertyName="Access-Control-Allow-Methods" value="GET,HEAD,PUT,PATCH,POST,DELETE" doc:name="set Access-Control-Allow-Methods Property"/>
+        <set-property propertyName="Access-Control-Allow-Origin" value="*" doc:name="set Access-Control-Allow-Origin Property" />
+        <set-property propertyName="Access-Control-Allow-Methods" value="GET,HEAD,PUT,PATCH,POST,DELETE" doc:name="set Access-Control-Allow-Methods Property" />
     </sub-flow>
     <apikit:mapping-exception-strategy name="newtoms_landing_page_exp_api-apiKitGlobalExceptionMapping">
         <apikit:mapping statusCode="404">
